@@ -1,0 +1,115 @@
+<!-- include header -->
+<%- include('../../template/_header') %>
+<!-- /include header -->
+<!-- Header -->
+<header id="header">
+    <nav>
+        <div class="container">
+            <div class="text-center">
+                <a href="/" class="nav-brand text-dark">User Management System - Add News</a>
+            </div>
+        </div>
+    </nav>
+</header>
+<!-- /Header -->
+
+<!-- Main Site -->
+<main id="site-main">
+    <div class="container">
+        <div class="box-nav d-flex justify-between">
+            <div class="filter">
+                <a href="/news"><i class="fas fa-angle-double-left"></i> All News</a>
+            </div>
+        </div>
+        <div class="form-title text-center">
+            <h2 class="text-dark">New User</h2>
+            <span class="text-light">Use the below form to create a new news</span>
+        </div>
+        
+        <!-- form handling -->
+        <form action="/api/news" method="POST" id="add_user">
+            <div class="full-width">
+                <label for="judul" class="text-black large-label">Judul</label>
+                <input type="hidden" name="id" value="">
+                <input type="text" name="judul" value="" placeholder="Berita hari ini">
+            </div>
+            <div class="full-width">
+                <label for="deskripsi" class="text-black large-label">Deskripsi</label>
+                <textarea name="deskripsi" class="feedback-input" placeholder="Comment"></textarea>
+            </div>
+            <div>
+                <label for="gambar" class="text-black large-label">Gambar</label>
+                <input type="text" name="gambar" value="" placeholder="example@gmail.com">
+            </div>
+            <div >
+                <label for="penulis" class="text-black large-label">Penulis</label>
+                <input type="text" name="penulis" value="" placeholder="John Smith">
+            </div>
+            <div>
+                <label for="tanggal_input Input" class="text-black large-label">Tanggal Input</label>
+                <input type="date" name="tanggal_input" value="" placeholder="">
+            </div>
+            <div>
+                <label for="cars" class="text-black large-label">Kategori</label>
+                <div>
+                    <select name="cars" id="cars">
+                        <option value="volvo">Volvo</option>
+                        <option value="saab">Saab</option>
+                        <option value="mercedes">Mercedes</option>
+                        <option value="audi">Audi</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="full-width">
+                <button type="submit" class="btn text-dark update">Save</button>
+            </div>
+        </form>
+        <!-- <form>
+            <div>
+                <label for="name" class="large-label">Name</label>
+                <input id="name" type="text" />
+            </div>
+            <div>
+                <label for="email" class="large-label">Email</label>
+                <input id="email" type="email" />
+            </div>
+            <div>
+                <label for="comp" class="large-label">Favorite CSS Compiler</label>
+                <select id="comp">
+                    <option value="sass">Sass</option>
+                    <option value="less">Less</option>
+                    <option value="stylus">Stylus</option>
+                    <option value="postcss">PostCSS</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <div>
+                <fieldset>
+                    <legend class="large-label">Are you familiar with CSS Grid?</legend>
+                    <input type="radio" name="grid" id="yes" value="yes" />
+                    <label for="yes" class="large-label">Yes</label>
+                    <input type="radio" name="grid" id="no" value="no" />
+                    <label for="no" class="large-label">No</label>
+                </fieldset>
+            </div>
+            <div class="full-width">
+                <label for="message" class="large-label">Message</label>
+                <textarea id="message"></textarea>
+            </div>
+            <div class="full-width">
+                <input type="checkbox" id="newsletter" />
+                <label for="newsletter" class="large-label">Receive our newsletter?</label>
+            </div>
+            <div class="full-width">
+                <button type="submit">Send Response</button>
+                <button type="reset">Clear Form</button>
+            </div>
+        </form> -->
+    </div>
+</main>
+<!-- /Main Site -->
+
+<!-- include footer -->
+<%- include('../../template/_footer') %>
+<!-- /include footer -->

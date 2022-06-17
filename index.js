@@ -6,7 +6,7 @@ const path          = require("path");
 
 const connectDB = require('./server/databases/connection');
 
-const app           = express();
+const app = express();
 
 dotenv.config({path:'config.env'});
 const PORT = process.env.PORT || 8080;
@@ -28,10 +28,14 @@ app.set("view engine","ejs");
 
 // load assets
 app.use("/css",express.static(path.resolve(__dirname,"assets/css"))); 
-app.use("/images",express.static(path.resolve(__dirname,"assets/images"))); 
+app.use("/img",express.static(path.resolve(__dirname,"assets/img"))); 
 app.use("/js",express.static(path.resolve(__dirname,"assets/js"))); 
 
 // load routers
-app.use('/', require('./server/routes/router'))
+app.use('/', require('./server/routes/router'));
+
+app.use((req, res, next) => {
+    res.status(404).sendFile(__dirname + '/views/template/404-not-found.html');
+});
 
 app.listen(PORT, ()=> {console.log(`Server is running on http://localhost:${PORT}`)});

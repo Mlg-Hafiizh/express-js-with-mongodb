@@ -1,14 +1,26 @@
 <!-- include header -->
-<%- include('include/_header') %>
+<%- include('../../template/_header') %>
 <!-- /include header -->
-
+    <!-- Header -->
+    <header id="header">
+        <nav>
+            <div class="container">
+                <div class="text-center">
+                    <a href="/" class="nav-brand text-dark">User Management System - Welcome!</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <!-- /Header -->
 
     <!-- Main Site -->
     <main id="site-main">
         <div class="container">
-            <div class="box-nav d-flex justify-between">
-                <a href="/add-user" class="border-shadow">
-                    <span class="text-gradient">New User <i class="fas fa-user"></i></span>
+            <%- include('../menu/menu') %>
+            
+            <div class="box-nav d-flex justify-between" style="float:left;margin:0 0 25px 0;">
+                <a href="/add-user" class="border-shadow" style="margin:0 10px 0 0;">
+                    <span class="text-gradient">New User <i class="far fa-newspaper"></i></span>
                 </a>
             </div>
 
@@ -26,7 +38,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <%- include('include/_show') %>
+                        <%- include('show') %>
                     </tbody>
                 </table>
             </form>
@@ -36,5 +48,5 @@
 
 
 <!-- include footer -->
-<%- include('include/_footer') %>
+<%- include('../../template/_footer') %>
 <!-- /include footer -->

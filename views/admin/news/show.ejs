@@ -1,0 +1,16 @@
+<% for(var i = 0; i < news.length; i++) { %>
+<tr>
+    <td><%= i + 1 %></td>
+    <td><%= news[i].judul %></td>
+    <td><%= news[i].penulis %></td>
+    <td><%= news[i].tanggal_input %></td>
+    <td>
+        <a href="/update-user?id=<%= news[i]._id%>" class="btn border-shadow update">
+            <span class="text-gradient"><i class="fas fa-pencil-alt"></i></span>
+        </a>
+        <a class="btn border-shadow delete" data-id=<%= news[i]._id%> >
+            <span class="text-gradient"><i class="fas fa-times"></i></span>
+        </a>
+    </td>
+</tr>
+<% } %>

@@ -1,0 +1,77 @@
+<!-- include header -->
+<%- include('../template/_header') %>
+<!-- /include header -->
+    
+<style>
+    blockquote {
+      background: #f9f9f9;
+      border-left: 10px solid #ccc;
+      margin: 1.5em 10px;
+      padding: 0.5em 10px;
+      quotes: "\201C""\201D""\2018""\2019";
+    }
+    blockquote:before {
+      color: #ccc;
+      content: open-quote;
+      font-size: 4em;
+      line-height: 0.1em;
+      margin-right: 0.25em;
+      vertical-align: -0.4em;
+    }
+    blockquote p {
+      display: inline;
+    }
+</style>
+
+    <!-- Header -->
+    <header id="header">
+        <nav>
+            <div class="container">
+                <div class="text-center">
+                    <a href="/" class="nav-brand text-dark">User Management System - Welcome!</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <!-- /Header -->
+
+    <!-- Main Site -->
+    <main id="site-main">
+        <div class="container">
+            <%- include('menu/menu') %>
+
+            <h1>Ujian Akhir Semester</h1>
+
+            <p>Buatlah aplikasi berbasis web menggunakan Node.JS dan MongoDB dengan tema bebas.</p>
+
+            
+
+            <blockquote>
+                <p>Aplikasi harus:</p>
+                <ol style="margin-left:25px;">
+                    <li>
+                        Menerapkan web services, dimana data yang dikirim dan diterima oleh server ukurannya kecil dan berformat JSON.
+                    </li>
+                    <li>
+                        Ada transaksi, sehingga ada data yang harus dikirim ke server untuk disimpan dalam database MongoDB.
+                    </li>
+                    <li>
+                        User Interface untuk transaksi harus ada ComboBox, dimana isi/item dalam ComboBox diambil dari dalam database.
+                    </li>
+                    <li>
+                        Menyediakan fasilitas pencarian data. Data tersebut kemudian bisa ditampilkan di sisi client.
+                    </li>
+                    <li>
+                        Aplikasi harus dipresentasikan dan didemokan saat UAS.
+                    </li>
+                </ol>
+            </blockquote>
+
+        </div>
+    </main>
+<!-- /Main Site -->
+
+
+<!-- include footer -->
+<%- include('../template/_footer') %>
+<!-- /include footer -->
