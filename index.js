@@ -18,18 +18,19 @@ app.use(morgan('tiny'));
 connectDB();
 
 // parse request to body-parser
-app.use(bodyparser.urlencoded({extended:true}));
+app.use(bodyparser.urlencoded({extended:false}));
 
 // menambahkan folder ke dalam engine ejs
 app.set("view engine","ejs");
 
 // menambahkan sub folder ke dalam engine ejs
-//app.set("views",path.resolve(__dirname,"views/ejs"));
+app.set("views",path.resolve(__dirname,"./views"));
 
 // load assets
 app.use("/css",express.static(path.resolve(__dirname,"assets/css"))); 
-app.use("/img",express.static(path.resolve(__dirname,"assets/img"))); 
+app.use("/images",express.static(path.resolve(__dirname,"assets/images"))); 
 app.use("/js",express.static(path.resolve(__dirname,"assets/js"))); 
+app.use("/vendors",express.static(path.resolve(__dirname,"assets/vendors"))); 
 
 // load routers
 app.use('/', require('./server/routes/router'));

@@ -1,15 +1,97 @@
-<!-- Sidebar/menu -->
-<nav class="w3-sidebar w3-red w3-collapse w3-top w3-large w3-padding" style="z-index:3;width:300px;font-weight:bold;" id="mySidebar"><br>
-    <a href="javascript:void(0)" onclick="w3_close()" class="w3-button w3-hide-large w3-display-topleft" style="width:100%;font-size:22px">Close Menu</a>
-    <div class="w3-container">
-        <h3 class="w3-padding-64"><b>Company<br>Name</b></h3>
+<% 
+    master = '',user = '',buku = '',kategori = '',kasir = '',penjualan = '',laporan = '',rekap_penjualan = ''
+
+    if(menu == 'master') {
+        master = 'active'
+    } else if (menu == 'user'){
+        user = 'active'
+    } else if (menu == 'buku'){
+        buku = 'active'
+    } else if (menu == 'kategori'){
+        kategori = 'active'
+    } else if (menu == 'status_user'){
+        status_user = 'active'
+    } else if (menu == 'kasir'){
+        kasir = 'active'
+    } else if (menu == 'penjualan'){
+        penjualan = 'active'
+    } else if (menu == 'laporan'){
+        laporan = 'active'
+    } else if (menu == 'rekap_penjualan'){
+        rekap_penjualan = 'active'
+    }
+%>
+
+
+<div id="sidebar" class="active">
+    <div class="sidebar-wrapper active">
+        <div class="sidebar-header">
+            <div class="d-flex justify-content-between">
+                <div class="logo">
+                    <a href="index.html"><img src="images/logo/logo.png" alt="Logo" srcset=""></a>
+                </div>
+                <div class="toggler">
+                    <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="sidebar-menu">
+            <ul class="menu">
+                <li class="sidebar-title">Master</li>
+               
+                <li class="sidebar-item <%- master %>">
+                
+                    <a href="/" class='sidebar-link'>
+                        <i class="bi bi-wallet-fill"></i>
+                        <span>Pengumuman</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-item  <%- user %>">
+                    <a href="/users" class='sidebar-link'>
+                        <i class="bi bi-people"></i>
+                        <span>User</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-item  <%- buku %>">
+                    <a href="/buku" class='sidebar-link'>
+                        <i class="bi bi-book-fill"></i>
+                        <span>Buku</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-item  <%- kategori %>">
+                    <a href="/kategori" class='sidebar-link'>
+                        <i class="bi bi-plus-circle-fill"></i>
+                        <span>Kategori</span>
+                    </a>
+                </li>
+               
+            </ul>
+            <ul class="menu">
+                <li class="sidebar-title">Kasir</li>
+               
+                <li class="sidebar-item  <%- penjualan %>">
+                    <a href="#" class='sidebar-link'>
+                        <i class="bi bi-cart-fill"></i>
+                        <span>Penjualan</span>
+                    </a>
+                </li>
+
+            </ul>
+            <ul class="menu">
+                <li class="sidebar-title">Laporan</li>
+               
+                <li class="sidebar-item  <%- rekap_penjualan %>">
+                    <a href="#" class='sidebar-link'>
+                        <i class="bi bi-file-earmark-bar-graph-fill"></i>
+                        <span>Rekap Penjualan</span>
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+        <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
     </div>
-    <div class="w3-bar-block">
-        <a href="#" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Home</a> 
-        <a href="#berita-terbaru" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Berita Terbaru</a> 
-        <a href="#berita-pilihan" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Berita Pilihan</a> 
-        <a href="#berita-tag" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Populer Tag</a> 
-        <a href="#berita-list" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Index Berita</a>
-        <a href="/" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Login</a>
-    </div>
-</nav>
+</div>

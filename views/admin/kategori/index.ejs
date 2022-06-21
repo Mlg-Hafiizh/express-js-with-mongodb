@@ -1,0 +1,96 @@
+<%- include('../../template/_header') %>
+
+    <div id="app">
+        <%- include('../../template/_sidebar') %>
+        <div id="main">
+            <header class="mb-3">
+                <a href="#" class="burger-btn d-block d-xl-none">
+                    <i class="bi bi-justify fs-3"></i>
+                </a>
+            </header>
+
+            <div class="page-heading">
+                <div class="page-title">
+                    <div class="row">
+                        <div class="col-12 col-md-6 order-md-1 order-last">
+                            <h3>Halaman pengelolaan Kategori</h3>
+                            <p class="text-subtitle text-muted">Berikut beberapa kategori yang tersimpan pada database</p>
+                        </div>
+                        <div class="col-12 col-md-6 order-md-2 order-first">
+                            <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="/">Master</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Halaman Kategori</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+
+                <section class="section">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="card-body">
+                                <ul class="list-unstyled mb-0">
+                                    <li class="d-inline-block me-2 mb-1" style="float:left;">
+                                        <a href="/add-kategori">
+                                            <button class="btn btn-primary">Tambah</button>
+                                        </a>
+                                    </li>
+                                    <li class="d-inline-block mb-1" style="float:right;">
+                                        <div class="form-group row align-items-center">
+                                            <div class="col-8" style="padding:0;">
+                                                <input type="text" class="form-control" id="basicInput" placeholder="Cari...">
+                                            </div>
+                                            <div class="col-4">
+                                                <button class="btn btn-primary" style="width: 100%;">Cari</button>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                                
+                        <div class="card-body">
+                            <%- include('show') %>
+                        </div>
+                    </div>
+
+                </section>
+                <!-- // Basic Horizontal form layout section end -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        if(window.location.pathname == "/kategori"){
+            $ondelete = $("#delete-kategori");
+            $ondelete.click(function(){
+                var id = $(this).attr("data-id")
+
+                var request = {
+                    "url" : `http://localhost:3000/api/kategori/${id}`,
+                    "method" : "DELETE"
+                }
+
+                if(confirm("Do you really want to delete this record?")){
+                    $.ajax(request).done(function(response){
+                        alert("Data Deleted Successfully!");
+                        location.reload();
+                    })
+                }
+
+            })
+        }
+
+        let table_kategori = document.querySelector('#table-kategori');
+        let dataTable = new simpleDatatables.DataTable(table_kategori,{
+            noRows: "No data to display",
+            layout: {
+                top: "",
+                bottom: "{info}{pager}"
+            },
+        });
+    
+    </script>
+<%- include('../../template/_footer') %>

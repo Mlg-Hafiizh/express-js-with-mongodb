@@ -1,17 +1,40 @@
-<% for(var i = 0; i < users.length; i++) { %>
-<tr>
-    <td><%= i + 1 %></td>
-    <td><%= users[i].name %></td>
-    <td><%= users[i].email %></td>
-    <td><%= users[i].gender %></td>
-    <td><%= users[i].status %></td>
-    <td>
-        <a href="/update-user?id=<%= users[i]._id%>" class="btn border-shadow update">
-            <span class="text-gradient"><i class="fas fa-pencil-alt"></i></span>
-        </a>
-        <a class="btn border-shadow delete" data-id=<%= users[i]._id%> >
-            <span class="text-gradient"><i class="fas fa-times"></i></span>
-        </a>
-    </td>
-</tr>
-<% } %>
+<table class="table table-striped" id="table-users">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Gender</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% for(var i = 0; i < users.length; i++) { %>
+            <tr>
+                <td><%= users[i].name %></td>
+                <td><%= users[i].email %></td>
+                <td><%= users[i].gender %>
+                    <% if(users[i].gender == 'male') { %>
+                        <i class="fa fa-mars" style="color: #37badf;"></i></i>
+                    <% } else { %> 
+                        <i class="fa fa-venus" style="color: #37badf;"></i></i>
+                    <% } %>
+                </td>
+                <td>
+                    <% if(users[i].status == 'active'){ %>
+                        <span class="badge bg-success"><%= users[i].status %></span>
+                    <% } else{ %>
+                        <span class="badge bg-danger"><%= users[i].status %></span>
+                    <% } %>
+                </td>
+                <td>
+                    <div class="button" style="display: inline-flex;">
+                        <a href="/update-user?id=<%= users[i]._id%>" class="btn btn-info btn-sm" style="border-top-right-radius:0;border-bottom-right-radius:0;">Edit</a>
+                        <a id="delete-users" data-id="<%= users[i]._id%>" class="btn btn-dark btn-sm" style="border-top-left-radius:0;border-bottom-left-radius:0;">Delete</a>
+                    </div>
+                </td>
+            </tr>
+        <% } %>
+            
+    </tbody>
+</table>

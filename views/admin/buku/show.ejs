@@ -1,0 +1,36 @@
+<table class="table table-striped" id="table-buku">
+    <thead>
+        <tr>
+            <th>ISBN</th>
+            <th>Name</th>
+            <th>Stok</th>
+            <th>Harga</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% for(var i = 0; i < buku.length; i++) { %>
+            <tr>
+                <td><%= buku[i].isbn %></td>
+                <td><%= buku[i].name %></td>
+                <td><%= buku[i].stok %></td>
+                <td><%= buku[i].harga %></td>
+                <td>
+                    <% if(buku[i].status == 'active'){ %>
+                        <span class="badge bg-success"><%= buku[i].status %></span>
+                    <% } else{ %>
+                        <span class="badge bg-danger"><%= buku[i].status %></span>
+                    <% } %>
+                </td>
+                <td>
+                    <div class="button" style="display: inline-flex;">
+                        <a href="/update-buku?id=<%= buku[i]._id%>" class="btn btn-info btn-sm" style="border-top-right-radius:0;border-bottom-right-radius:0;">Edit</a>
+                        <a id="delete-buku" data-id="<%= buku[i]._id%>" class="btn btn-dark btn-sm" style="border-top-left-radius:0;border-bottom-left-radius:0;">Delete</a>
+                    </div>
+                </td>
+            </tr>
+        <% } %>
+            
+    </tbody>
+</table>

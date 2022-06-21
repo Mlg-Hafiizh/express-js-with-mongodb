@@ -1,0 +1,31 @@
+<table class="table table-striped" id="table-kategori">
+    <thead>
+        <tr>
+            <th>Nama</th>
+            <th>Urutan</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% for(var i = 0; i < kategori.length; i++) { %>
+            <tr>
+                <td><%= kategori[i].name %></td>
+                <td><%= kategori[i].urutan %></td>
+                <td>
+                    <% if(kategori[i].status == 'active'){ %>
+                        <span class="badge bg-success"><%= kategori[i].status %></span>
+                    <% } else{ %>
+                        <span class="badge bg-danger"><%= kategori[i].status %></span>
+                    <% } %>
+                </td>
+                <td>
+                    <div class="button" style="display: inline-flex;">
+                        <a href="/update-kategori?id=<%= kategori[i]._id%>" class="btn btn-info btn-sm" style="border-top-right-radius:0;border-bottom-right-radius:0;">Edit</a>
+                        <a id="delete-kategori" data-id="<%= kategori[i]._id%>" class="btn btn-dark btn-sm" style="border-top-left-radius:0;border-bottom-left-radius:0;">Delete</a>
+                    </div>
+                </td>
+            </tr>
+        <% } %>
+            
+    </tbody>
+</table>
