@@ -12,7 +12,10 @@ var schema = new mongoose.Schema({
     },
     deskripsi : String,
     kategori : String,
-    image : String,
+    picture : {
+        data: Buffer,
+        contentType: String
+    },
     stok : {
         type : Number,
         required: true

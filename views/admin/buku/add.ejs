@@ -31,7 +31,8 @@
                     <div class="card-header">
                         <h4 class="card-title">Tambah buku baru</h4>
                     </div>
-                    <form action="/api/buku" method="POST" style="margin-top:-20px !important;" id="add_buku">
+                    <%= kategori %>
+                    <form action="/api/buku" method="POST" style="margin-top:-20px !important;" id="add_buku" enctype="multipart/form-data">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6">
@@ -48,7 +49,11 @@
                                         <label for="name">Nama Buku <i style="color:red;">*</i></label>
                                         <input type="text" class="form-control" name="name" placeholder="Long Walk to Freedom" required>
                                     </div>
-
+                                    <div class="form-group">
+                                        <label for="name">Kategori Buku <i style="color:red;">*</i></label>
+                                        <select class="form-select" name="kategori" id="locality-dropdown">
+                                        </select>
+                                    </div>
                                     <div class="form-group">
                                         <label for="deskripsi">Deskripsi</label>
                                         <textarea class="form-control" rows="3" name="deskripsi"></textarea>
@@ -57,7 +62,8 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="picture">Picture</label>
-                                        <input class="form-control" type="file" id="picture">
+                                        <!-- <input class="form-control" type="file" name="picture"> -->
+                                        <input class="form-control" type="file" name="myImage" accept="image/*">
                                     </div>
                                     <div class="form-group">
                                         <label for="stok">Stok <i style="color:red;">*</i></label>
@@ -71,11 +77,11 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="status" style="margin-bottom: 8px;">Status</label><br>
-                                        <input class="form-check-input" type="radio" name="status" value="active" checked>
+                                        <input class="form-check-input" type="radio" name="status" value="Active" checked>
                                         <label class="form-check-label" for="status">
                                             Active
                                         </label>
-                                        <input class="form-check-input" type="radio" name="status" value="inactive">
+                                        <input class="form-check-input" type="radio" name="status" value="Inactive">
                                         <label class="form-check-label" for="status">
                                             Inactive
                                         </label>
@@ -101,7 +107,22 @@
 <script>
     $("#add_buku").submit(function(event){
         alert("Data Inserted Successfully!");
-    })
+    });
+
+    let dropdown = $('#locality-dropdown');
+
+    dropdown.empty();
+
+    dropdown.prop('selectedIndex', 0);
+
+    const url = 'http://localhost:3000/api/kategori';
+
+    // Populate dropdown with list of provinces
+    $.getJSON(url, function (data) {
+        $.each(data, function (key, entry) {
+            dropdown.append($('<option></option>').attr('value', entry.name).text(entry.name));
+        })
+    });
 </script>
 
 <%- include('../../template/_footer') %>

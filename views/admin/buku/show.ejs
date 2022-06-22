@@ -15,9 +15,9 @@
                 <td><%= buku[i].isbn %></td>
                 <td><%= buku[i].name %></td>
                 <td><%= buku[i].stok %></td>
-                <td><%= buku[i].harga %></td>
+                <td id="harga" value="<%= buku[i].harga %>"><%= buku[i].harga %></td>
                 <td>
-                    <% if(buku[i].status == 'active'){ %>
+                    <% if(buku[i].status == 'Active'){ %>
                         <span class="badge bg-success"><%= buku[i].status %></span>
                     <% } else{ %>
                         <span class="badge bg-danger"><%= buku[i].status %></span>

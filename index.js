@@ -2,6 +2,7 @@ const express       = require("express");
 const dotenv        = require("dotenv");
 const morgan        = require("morgan");
 const bodyparser    = require("body-parser");
+const multer        = require("multer");
 const path          = require("path");
 
 const connectDB = require('./server/databases/connection');
@@ -19,6 +20,7 @@ connectDB();
 
 // parse request to body-parser
 app.use(bodyparser.urlencoded({extended:false}));
+app.use(bodyparser.json());
 
 // menambahkan folder ke dalam engine ejs
 app.set("view engine","ejs");

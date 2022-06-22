@@ -62,9 +62,10 @@ exports.update_kategori = (req, res) =>{
 
 // Admin buku
 exports.bukuRoutes = (req, res) => {
+   
     axios.get('http://localhost:3000/api/buku')
         .then(function(response){
-            res.render('admin/buku/index', { buku : response.data, menu : 'buku'});
+            res.render('admin/buku/index', { buku : response.data, menu : 'buku', kategori : kategori});
         })
         .catch(err =>{
             res.send(err);

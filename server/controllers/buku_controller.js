@@ -1,14 +1,27 @@
 var tb_buku = require('../models/buku_model');
-const mongoose = require('mongoose');
+const multer = require("multer");
+
+// SET STORAGE
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, 'assets/images/buku')
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.fieldname + '-' + Date.now())
+    }
+  });
+var upload = multer({ storage: storage });
 
 // create and save new buku
-exports.create = (req,res)=>{
+exports.create = (upload.single('myImage')), (req,res) => { 
     // validate request
     if(!req.body){
         res.status(400).send({ message : "Content can not be emtpy!"});
         return;
     }
-    console.log(req.body.harga);
+    console.log(req);
+    return false;
+
     const buku = new tb_buku({
         isbn : req.body.isbn,
         name : req.body.name,
