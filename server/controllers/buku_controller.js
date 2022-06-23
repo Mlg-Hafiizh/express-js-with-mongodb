@@ -7,6 +7,9 @@ var path          = require("path");
 exports.create = (req,res) => { 
     var formData = new formidable.IncomingForm();
     formData.parse(req, function(err,fields,files){
+        console.log(fields);
+        console.log(files);
+        return false;
           // validate request
         if(!fields){
             res.status(400).send({ message : "Content can not be emtpy!"});
@@ -22,7 +25,6 @@ exports.create = (req,res) => {
             deskripsi: fields.deskripsi,
             kategori: fields.kategori,
             picture : files.myImage.newFilename + extension,
-            stok : fields.stok,
             harga : fields.harga,
             status : fields.status,
         })
