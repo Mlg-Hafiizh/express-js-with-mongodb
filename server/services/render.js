@@ -1,4 +1,5 @@
 const axios = require('axios');
+var bukuPicPath = "/images/buku";
 
 exports.adminRoutes = (req, res) =>{
     res.render('admin/index', {menu : 'master'});
@@ -62,10 +63,9 @@ exports.update_kategori = (req, res) =>{
 
 // Admin buku
 exports.bukuRoutes = (req, res) => {
-   
     axios.get('http://localhost:3000/api/buku')
         .then(function(response){
-            res.render('admin/buku/index', { buku : response.data, menu : 'buku', kategori : kategori});
+            res.render('admin/buku/index', { buku : response.data, menu : 'buku'});
         })
         .catch(err =>{
             res.send(err);
@@ -79,7 +79,7 @@ exports.add_buku = (req, res) =>{
 exports.update_buku = (req, res) =>{
     axios.get('http://localhost:3000/api/buku', { params : { id : req.query.id }})
         .then(function(bukudata){
-            res.render("admin/buku/update", { buku : bukudata.data, menu : 'buku'})
+            res.render("admin/buku/update", { buku : bukudata.data, menu : 'buku', baseUrl : req.get('host') + bukuPicPath})
         })
         .catch(err =>{
             res.send(err);

@@ -7,7 +7,6 @@
                 <i class="bi bi-justify fs-3"></i>
             </a>
         </header>
-
         <div class="page-heading">
             <div class="page-title">
                 <div class="row">
@@ -31,7 +30,7 @@
                     <div class="card-header">
                         <h4 class="card-title">Tambah buku baru</h4>
                     </div>
-                    
+                    <%= baseUrl %>
                     <form method="PUT" style="margin-top:-20px !important;" id="update_buku">
                         <div class="card-body">
                             <div class="row">
@@ -55,10 +54,29 @@
                                         <textarea class="form-control" rows="3" name="deskripsi"><%= buku.deskripsi %></textarea>
                                     </div>                                    
                                 </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5 class="card-title">Image Preview</h5>
+                                        </div>
+                                        <div class="card-content">
+                                            <div class="card-body">
+                                                <p class="card-text">Using the basic table up, upload here to see how
+                                                    <code>.image-preview-filepond</code>-based basic file uploader look. This
+                                                    preview for uploaded or dropped images.
+                                                </p>
+                                                <!-- File uploader with image preview -->
+                                                <input type="file" class="image-preview-filepond">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="picture">Picture</label>
-                                        <input class="form-control" type="file" id="picture">
+                                        <input class="form-control" type="file" id="picture" value="<%= buku.picture %>">
+                                        <img src="http://<%= baseUrl %>/<%= buku.picture %>" id="blah" style="width:200px;height:150px;">
+                                        <!-- <img id="blah" src="#" alt="your image" /> -->
                                     </div>
                                     <div class="form-group">
                                         <label for="stok">Stok <i style="color:red;">*</i></label>
@@ -103,25 +121,19 @@
     $("#update_buku").submit(function(event){
         event.preventDefault();
 
-        var unindexed_array = $(this).serializeArray();
-        var data = {}
-
-        $.map(unindexed_array, function(n, i){
-            data[n['name']] = n['value']
-        })
-
-
-        var request = {
-            "url" : `http://localhost:3000/api/buku/${data.id}`,
-            "method" : "PUT",
-            "data" : data
-        }
-
         $.ajax(request).done(function(response){
             alert("Data Updated Successfully!");
         })
 
-    })
+    });
+
+    picture.onchange = evt => {
+        const [file] = picture.files
+        if (file) {
+            blah.src = URL.createObjectURL(file);
+        } 
+    };
+    
 </script>
 
 <%- include('../../template/_footer') %>

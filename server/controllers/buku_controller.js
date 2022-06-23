@@ -1,49 +1,49 @@
 var tb_buku = require('../models/buku_model');
-const multer = require("multer");
-
-// SET STORAGE
-var storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, 'assets/images/buku')
-    },
-    filename: function (req, file, cb) {
-      cb(null, file.fieldname + '-' + Date.now())
-    }
-  });
-var upload = multer({ storage: storage });
+var formidable = require('formidable');
+var fs = require('fs');
+var path          = require("path");
 
 // create and save new buku
-exports.create = (upload.single('myImage')), (req,res) => { 
-    // validate request
-    if(!req.body){
-        res.status(400).send({ message : "Content can not be emtpy!"});
-        return;
-    }
-    console.log(req);
-    return false;
+exports.create = (req,res) => { 
+    var formData = new formidable.IncomingForm();
+    formData.parse(req, function(err,fields,files){
+          // validate request
+        if(!fields){
+            res.status(400).send({ message : "Content can not be emtpy!"});
+            return;
+        }
 
-    const buku = new tb_buku({
-        isbn : req.body.isbn,
-        name : req.body.name,
-        deskripsi: req.body.deskripsi,
-        kategori: req.body.kategori,
-        image : req.body.image,
-        stok : req.body.stok,
-        harga : req.body.harga,
-        status : req.body.status,
-    })
-
-    buku
-        .save(buku)
-        .then(data => {
-            // res.send('data')
-            res.redirect('/add-buku');
+        var extension = files.myImage.originalFilename.substr(files.myImage.originalFilename.lastIndexOf("."));
+        var newPath = path.resolve(__dirname,"../../assets/images/buku/") + "\\" + files.myImage.newFilename + extension;
+        
+        const buku = new tb_buku({
+            isbn : fields.isbn,
+            name : fields.name,
+            deskripsi: fields.deskripsi,
+            kategori: fields.kategori,
+            picture : files.myImage.newFilename + extension,
+            stok : fields.stok,
+            harga : fields.harga,
+            status : fields.status,
         })
-        .catch(err =>{
-            res.status(500).send({
-                message : err.message || "Some error occurred while creating a create operation"
+    
+        fs.copyFile(files.myImage._writeStream.path, newPath, function(errorRename) {
+
+            buku
+            .save(buku)
+            .then(data => {
+                // res.send('data')
+                res.redirect('/add-buku');
+            })
+            .catch(err =>{
+                res.status(500).send({
+                    message : err.message || "Some error occurred while creating a create operation"
+                });
             });
+
+            // res.send("File saved = " + newPath); 
         });
+    });
 
 }
 
@@ -57,7 +57,7 @@ exports.find = (req, res)=>{
                 if(!data){
                     res.status(404).send({ message : "Not found buku with id "+ id})
                 }else{
-                    res.send(data)
+                    res.send(data); 
                 }
             })
             .catch(err =>{
@@ -67,7 +67,6 @@ exports.find = (req, res)=>{
     }else{
         tb_buku.find()
             .then(buku => {
-                console.log(buku);
                 res.send(buku)
             })
             .catch(err => {
