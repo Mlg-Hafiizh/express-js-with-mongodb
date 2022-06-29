@@ -1,5 +1,5 @@
 <% 
-    master = '',user = '',buku = '',kategori = '',kasir = '',penjualan = '',laporan = '',rekap_penjualan = ''
+    master = '',user = '',buku = '',kategori = '',role = '',kasir = '',cart = '',laporan = '',rekap_penjualan = ''
 
     if(menu == 'master') {
         master = 'active'
@@ -9,17 +9,19 @@
         buku = 'active'
     } else if (menu == 'kategori'){
         kategori = 'active'
+    } else if (menu == 'role'){
+        role = 'active'
     } else if (menu == 'status_user'){
         status_user = 'active'
     } else if (menu == 'kasir'){
         kasir = 'active'
-    } else if (menu == 'penjualan'){
-        penjualan = 'active'
+    } else if (menu == 'cart'){
+        cart = 'active'
     } else if (menu == 'laporan'){
         laporan = 'active'
     } else if (menu == 'rekap_penjualan'){
         rekap_penjualan = 'active'
-    }
+    } 
 %>
 
 
@@ -49,8 +51,15 @@
 
                 <li class="sidebar-item  <%- user %>">
                     <a href="/users" class='sidebar-link'>
-                        <i class="bi bi-people"></i>
+                        <i class="bi bi-person-check-fill"></i>
                         <span>User</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-item  <%- role %>">
+                    <a href="/role" class='sidebar-link'>
+                        <i class="bi bi-people"></i>
+                        <span>Role</span>
                     </a>
                 </li>
 
@@ -70,12 +79,12 @@
                
             </ul>
             <ul class="menu">
-                <li class="sidebar-title">Kasir</li>
+                <li class="sidebar-title">Penjualan</li>
                
-                <li class="sidebar-item  <%- penjualan %>">
-                    <a href="#" class='sidebar-link'>
+                <li class="sidebar-item  <%- cart %>">
+                    <a href="/cart" class='sidebar-link'>
                         <i class="bi bi-cart-fill"></i>
-                        <span>Penjualan</span>
+                        <span>Keranjang</span>
                     </a>
                 </li>
 

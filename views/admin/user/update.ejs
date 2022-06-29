@@ -29,10 +29,10 @@
             <section class="section">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Tambah user baru</h4>
+                        <h4 class="card-title">Ubah user</h4>
                     </div>
                     
-                    <form method="PUT" style="margin-top:-20px !important;" id="update_user">
+                    <form style="margin-top:-20px !important;" id="update_user" enctype="multipart/form-data">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6">
@@ -45,22 +45,23 @@
                                     <div class="form-group">
                                         <label for="email">Email <i style="color:red;">*</i></label>
                                         <input type="email" class="form-control" name="email" placeholder="someone@example.com" required value="<%= user.email %>" >
-                                    </div>                                    
+                                    </div>    
+                                    <div class="form-group">
+                                        <label for="name">Role <i style="color:red;">*</i></label>
+                                        <select class="form-select" name="role" id="locality-dropdown" required value="<%= user.role %>" >
+                                        </select>
+                                    </div>                                
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="picture">Picture</label>
-                                        <input class="form-control" type="file" id="picture">
-                                    </div>
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="gender" style="margin-bottom: 8px;">Gender</label><br>
-                                                <input class="form-check-input" type="radio" name="gender" value="male" <%= user.gender == 'male' ? 'checked' : '' %>>
+                                                <input class="form-check-input" type="radio" name="gender" value="Male" <%= user.gender == 'Male' ? 'checked' : '' %>>
                                                 <label class="form-check-label" for="gender">
                                                     Male
                                                 </label>
-                                                <input class="form-check-input" type="radio" name="gender" value="female" <%= user.gender == 'female' ? 'checked' : '' %>>
+                                                <input class="form-check-input" type="radio" name="gender" value="Female" <%= user.gender == 'Female' ? 'checked' : '' %>>
                                                 <label class="form-check-label" for="gender">
                                                     Female
                                                 </label>
@@ -69,25 +70,42 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="status" style="margin-bottom: 8px;">Status</label><br>
-                                                <input class="form-check-input" type="radio" name="status" value="Active" <%= user.status == 'active' ? 'checked' : '' %>>
+                                                <input class="form-check-input" type="radio" name="status" value="Active" <%= user.status == 'Active' ? 'checked' : '' %>>
                                                 <label class="form-check-label" for="status">
                                                     Active
                                                 </label>
-                                                <input class="form-check-input" type="radio" name="status" value="Inactive" <%= user.status == 'inactive' ? 'checked' : '' %>>
+                                                <input class="form-check-input" type="radio" name="status" value="Inactive" <%= user.status == 'Inactive' ? 'checked' : '' %>>
                                                 <label class="form-check-label" for="status">
                                                     Inactive
                                                 </label>
                                             </div>
                                         </div>
-                                    </div>                                
+                                    </div>   
+                                    <div class="form-group" style="margin-top:30px;">
+                                        <a href="#">
+                                            <button class="btn btn-primary">Simpan</button>
+                                        </a>
+                                        <a href="/users">
+                                            <button type="button" class="btn btn-secondary">Back</button>
+                                        </a>   
+                                    </div>                              
                                 </div>
-                                <div class="col-md-12">
-                                    <a href="#">
-                                        <button class="btn btn-primary">Simpan</button>
-                                    </a>
-                                    <a href="/users">
-                                        <button type="button" class="btn btn-secondary">Back</button>
-                                    </a>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="picture">User Picture</label>
+                                        <input class="form-control" type="file" name="picture" id="picture" value="<%= user.picture %>">
+                                        <input type="hidden" name="picture_old" value="<%= user.picture %>">
+                                        <img src="http://<%= baseUrl %>/<%= user.picture %>" id="blah" 
+                                            style="height: 60%;
+                                            border-radius: 5px;
+                                            display: block;
+                                            margin-left: auto;
+                                            margin-right: auto;
+                                            width: 50%;
+                                            margin-top: 16px;
+                                            border: 2px solid darkgrey;"
+                                        >
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -99,6 +117,27 @@
 </div>
 
 <script>
+    let dropdown = $('#locality-dropdown');
+    let valRole = "<%= user.role %>";
+    dropdown.empty();
+    dropdown.prop('selectedIndex', 0);
+    const url = 'http://localhost:3000/api/role?status=Active';
+    $.getJSON(url, function (data) {
+        $.each(data, function (key, entry) {
+            if(entry.name == valRole){
+                dropdown.append($('<option></option>').attr({'value': entry.name, "selected":"selected"}).text(entry.name));
+            }
+            dropdown.append($('<option></option>').attr('value', entry.name).text(entry.name));
+        })
+    });
+
+    picture.onchange = evt => {
+        const [file] = picture.files
+        if (file) {
+            blah.src = URL.createObjectURL(file);
+        } 
+    };
+
     $("#update_user").submit(function(event){
         event.preventDefault();
 
@@ -109,18 +148,26 @@
             data[n['name']] = n['value']
         })
 
-
+        var datas = $('#update_user').serialize();
+        console.log(datas);
+        
+        var dataz = new FormData($("#update_user")[0]);
+        console.log(dataz);
+        
         var request = {
             "url" : `http://localhost:3000/api/users/${data.id}`,
             "method" : "PUT",
-            "data" : data
-        }
-
+            "enctype": 'multipart/form-data',
+            "processData": false,
+            "contentType": false,
+            "data" : dataz,
+        };
         $.ajax(request).done(function(response){
             alert("Data Updated Successfully!");
-        })
+        });
 
-    })
+    });
+    
 </script>
 
 <%- include('../../template/_footer') %>

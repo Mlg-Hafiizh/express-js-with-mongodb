@@ -31,35 +31,36 @@
                     <div class="card-header">
                         <h4 class="card-title">Tambah user baru</h4>
                     </div>
-                    <form action="/api/users" method="POST" style="margin-top:-20px !important;" id="add_user">
+                    <form action="/api/users" method="POST" style="margin-top:-20px !important;" id="add_user" enctype="multipart/form-data">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6">
                                     <input type="hidden" name="id" value="">
                                     <div class="form-group">
                                         <label for="name">Name <i style="color:red;">*</i></label>
-                                        <input type="text" class="form-control" name="name" placeholder="John Doe" required value="Hafiizh A" >
+                                        <input type="text" class="form-control" name="name" placeholder="John Doe" required>
                                     </div>
 
                                     <div class="form-group">
                                         <label for="email">Email <i style="color:red;">*</i></label>
-                                        <input type="email" class="form-control" name="email" placeholder="someone@example.com" required value="hafiizh@mail.com" >
-                                    </div>                                    
+                                        <input type="email" class="form-control" name="email" placeholder="someone@example.com" required>
+                                    </div>         
+                                    <div class="form-group">
+                                        <label for="name">Role <i style="color:red;">*</i></label>
+                                        <select class="form-select" name="role" id="locality-dropdown" required>
+                                        </select>
+                                    </div>                           
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="picture">Picture</label>
-                                        <input class="form-control" type="file" id="picture">
-                                    </div>
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="gender" style="margin-bottom: 8px;">Gender</label><br>
-                                                <input class="form-check-input" type="radio" name="gender" value="male" checked>
+                                                <input class="form-check-input" type="radio" name="gender" value="Male" checked>
                                                 <label class="form-check-label" for="gender">
                                                     Male
                                                 </label>
-                                                <input class="form-check-input" type="radio" name="gender" value="female">
+                                                <input class="form-check-input" type="radio" name="gender" value="Female">
                                                 <label class="form-check-label" for="gender">
                                                     Female
                                                 </label>
@@ -78,15 +79,31 @@
                                                 </label>
                                             </div>
                                         </div>
-                                    </div>                                
+                                    </div> 
+                                    <div class="form-group" style="margin-top:30px;">
+                                        <a href="#">
+                                            <button class="btn btn-primary">Simpan</button>
+                                        </a>
+                                        <a href="/users">
+                                            <button type="button" class="btn btn-secondary">Back</button>
+                                        </a>   
+                                    </div>    
                                 </div>
-                                <div class="col-md-12">
-                                    <a href="#">
-                                        <button class="btn btn-primary">Simpan</button>
-                                    </a>
-                                    <a href="/users">
-                                        <button type="button" class="btn btn-secondary">Back</button>
-                                    </a>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="name">User Picture</label>
+                                        <input type="file" class="form-control" name="picture" id="picture" accept="image/*">
+                                        <img id="blah" src="http://<%= baseUrl %>/images/your_image_here.jpg" alt="your image" 
+                                            style="height: 60%;
+                                            border-radius: 5px;
+                                            display: block;
+                                            margin-left: auto;
+                                            margin-right: auto;
+                                            width: 50%;
+                                            margin-top: 16px;
+                                            border: 2px solid darkgrey;"
+                                        />
+                                    </div>  
                                 </div>
                             </div>
                         </div>
@@ -100,7 +117,24 @@
 <script>
     $("#add_user").submit(function(event){
         alert("Data Inserted Successfully!");
-    })
+    });
+
+    let dropdown = $('#locality-dropdown');
+    dropdown.empty();
+    dropdown.prop('selectedIndex', 0);
+    const url = 'http://localhost:3000/api/role?status=Active';
+    $.getJSON(url, function (data) {
+        $.each(data, function (key, entry) {
+            dropdown.append($('<option></option>').attr('value', entry.name).text(entry.name));
+        })
+    });
+
+    picture.onchange = evt => {
+        const [file] = picture.files
+        if (file) {
+            blah.src = URL.createObjectURL(file);
+        } 
+    };
 </script>
 
 <%- include('../../template/_footer') %>

@@ -1,4 +1,4 @@
-var tb_kategori = require('../models/kategori_model');
+var tb_role = require('../models/role_model');
 
 // create and save new user
 exports.create = (req,res)=>{
@@ -7,16 +7,15 @@ exports.create = (req,res)=>{
         return;
     }
 
-    const kategori = new tb_kategori({
+    const role = new tb_role({
         name : req.body.name,
-        urutan : req.body.urutan,
         status : req.body.status,
     })
 
-    kategori
-        .save(kategori)
+    role
+        .save(role)
         .then(data => {
-            res.redirect('/add-kategori');
+            res.redirect('/add-role');
         })
         .catch(err =>{
             res.status(500).send({
@@ -29,31 +28,29 @@ exports.create = (req,res)=>{
 exports.find = (req, res)=>{
     if(req.query.id){
         const id = req.query.id;
-
-        tb_kategori.findById(id)
+        tb_role.findById(id)
             .then(data =>{
                 if(!data){
-                    res.status(404).send({ message : "Not found kategori with id "+ id});
+                    res.status(404).send({ message : "Not found role with id "+ id});
                 }else{
                     res.send(data);
                 }
             })
             .catch(err =>{
-                res.status(500).send({ message: "Error retrieving kategori with id " + id});
+                res.status(500).send({ message: "Error retrieving role with id " + id});
             })
     } else if(req.query.cari){
         const cari = req.query.cari;
-
-        tb_kategori.find({name : new RegExp(cari, 'i')})
+        tb_role.find({name : new RegExp(cari, 'i')})
             .then(data => {  
                 if(!data){
-                    res.status(404).send({ message : "Not found kategori with cari "+ cari});
+                    res.status(404).send({ message : "Not found role with cari "+ cari});
                 }else{
                     res.send(data);
                 } 
             })
             .catch(err => { 
-                res.status(500).send({ message: "Error retrieving kategori with cari " + cari + ". " + err});
+                res.status(500).send({ message: "Error retrieving role with cari " + cari + ". " + err});
             })
     }else{
         var status = "";
@@ -61,12 +58,12 @@ exports.find = (req, res)=>{
             status = req.query.status;
         } 
         //SELECT * FROM tb_buku WHERE status LIKE '% $status %';
-        tb_kategori.find({status : { $regex: '.*' + status + '.*' }}).sort({ urutan : "asc"})
-            .then(kategori => {
-                res.send(kategori);
+        tb_role.find({status : { $regex: '.*' + status + '.*' }}).sort({ name : "asc"})
+            .then(role => {
+                res.send(role);
             })
             .catch(err => {
-                res.status(500).send({ message : err.message || "Error Occurred while retriving kategori information" });
+                res.status(500).send({ message : err.message || "Error Occurred while retriving role information" });
             })
     }
 
@@ -81,35 +78,35 @@ exports.update = (req, res)=>{
     }
 
     const id = req.params.id;
-    tb_kategori.findByIdAndUpdate(id, req.body, { useFindAndModify: false})
+    tb_role.findByIdAndUpdate(id, req.body, { useFindAndModify: false})
         .then(data => {
             if(!data){
-                res.status(404).send({ message : `Cannot Update kategori with ${id}. Maybe kategori not found!`})
+                res.status(404).send({ message : `Cannot Update role with ${id}. Maybe role not found!`})
             }else{
                 res.send(data)
             }
         })
         .catch(err =>{
-            res.status(500).send({ message : "Error Update kategori information"})
+            res.status(500).send({ message : "Error Update role information"})
         })
 }
 
 exports.delete = (req, res)=>{
     const id = req.params.id;
 
-    tb_kategori.findByIdAndDelete(id)
+    tb_role.findByIdAndDelete(id)
         .then(data => {
             if(!data){
                 res.status(404).send({ message : `Cannot Delete with id ${id}. Maybe id is wrong`})
             }else{
                 res.send({
-                    message : "Kategori was deleted successfully!"
+                    message : "role was deleted successfully!"
                 })
             }
         })
         .catch(err =>{
             res.status(500).send({
-                message: "Could not delete Kategori with id=" + id
+                message: "Could not delete role with id=" + id
             });
         });
 }

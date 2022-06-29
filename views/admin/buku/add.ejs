@@ -54,7 +54,11 @@
                                     </div> 
                                     <div class="form-group">
                                         <label for="harga">Harga <i style="color:red;">*</i></label>
-                                        <input type="number" class="form-control" name="harga" placeholder="0" value="0" required>
+                                        <input type="number" class="form-control" name="harga" placeholder="0" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="stok">Stok <i style="color:red;">*</i></label>
+                                        <input type="number" class="form-control" name="stok" placeholder="0" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="status" style="margin-bottom: 8px;">Status</label><br>
@@ -80,20 +84,19 @@
                                         <input type="text" class="form-control" name="name" placeholder="Long Walk to Freedom" required>
                                     </div>
                                     <div class="form-group">
-                                        <label for="name">Upload Gambar</label>
-                                        <!-- <input type="file" class="form-control" name="myImage" accept="image/*"> -->
-                                        <input type="file" class="image-preview-filepond form-control" name="myImage" accept="image/*">
+                                        <label for="name">Cover Buku</label>
+                                        <input type="file" class="form-control" name="picture" id="picture" accept="image/*">
+                                        <img id="blah" src="http://<%= baseUrl %>/images/your_image_here.jpg"  
+                                            style="height: 60%;
+                                            border-radius: 5px;
+                                            display: block;
+                                            margin-left: auto;
+                                            margin-right: auto;
+                                            width: 50%;
+                                            margin-top: 16px;
+                                            border: 2px solid darkgrey;"
+                                        />
                                     </div>
-                                    <!-- <div class="form-group">
-                                        <label for="picture">Picture</label>
-                                        <input type="file" class="form-control" name="myImage" accept="image/*">
-                                    </div> -->
-                                </div>
-                                <div class="col-md-6">
-                                    
-                                </div>
-                                <div class="col-md-6">
-                                    
                                 </div>
                             </div>
                         </div>
@@ -110,19 +113,21 @@
     });
 
     let dropdown = $('#locality-dropdown');
-
     dropdown.empty();
-
     dropdown.prop('selectedIndex', 0);
-
-    const url = 'http://localhost:3000/api/kategori';
-
-    // Populate dropdown with list of provinces
+    const url = 'http://localhost:3000/api/kategori?status=Active';
     $.getJSON(url, function (data) {
         $.each(data, function (key, entry) {
             dropdown.append($('<option></option>').attr('value', entry.name).text(entry.name));
         })
     });
+
+    picture.onchange = evt => {
+        const [file] = picture.files
+        if (file) {
+            blah.src = URL.createObjectURL(file);
+        } 
+    };
 </script>
 
 <%- include('../../template/_footer') %>

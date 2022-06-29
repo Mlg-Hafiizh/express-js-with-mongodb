@@ -38,14 +38,16 @@
                                         </a>
                                     </li>
                                     <li class="d-inline-block mb-1" style="float:right;">
-                                        <div class="form-group row align-items-center">
-                                            <div class="col-8" style="padding:0;">
-                                                <input type="text" class="form-control" id="basicInput" placeholder="Cari...">
+                                        <form action="/users" method="GET" id="cari_user">
+                                            <div class="form-group row align-items-center">
+                                                <div class="col-8" style="padding:0;">
+                                                    <input type="text" class="form-control" id="cari" name="cari" placeholder="Cari...">
+                                                </div>
+                                                <div class="col-4">
+                                                    <button class="btn btn-primary" style="width: 100%;">Cari</button>
+                                                </div>
                                             </div>
-                                            <div class="col-4">
-                                                <button class="btn btn-primary" style="width: 100%;">Cari</button>
-                                            </div>
-                                        </div>
+                                        </form> 
                                     </li>
                                 </ul>
                             </div>

@@ -12,14 +12,14 @@
             <div class="page-title">
                 <div class="row">
                     <div class="col-12 col-md-6 order-md-1 order-last">
-                        <h3>Halaman pengelolaan Kategori</h3>
-                        <p class="text-subtitle text-muted">Berikut beberapa kategori yang tersimpan pada database</p>
+                        <h3>Halaman pengelolaan Role</h3>
+                        <p class="text-subtitle text-muted">Berikut beberapa Role yang tersimpan pada database</p>
                     </div>
                     <div class="col-12 col-md-6 order-md-2 order-first">
                         <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="/">Master</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Halaman Kategori</li>
+                                <li class="breadcrumb-item active" aria-current="page">Halaman Role</li>
                             </ol>
                         </nav>
                     </div>
@@ -29,32 +29,28 @@
             <section class="section">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Ubah kategori</h4>
+                        <h4 class="card-title">Ubah Role</h4>
                     </div>
                     
-                    <form method="PUT" style="margin-top:-20px !important;" id="update_kategori">
+                    <form method="PUT" style="margin-top:-20px !important;" id="update_role">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <input type="hidden" name="id" value="<%= kategori._id %>">
+                                    <input type="hidden" name="id" value="<%= role._id %>">
                                     <div class="form-group">
                                         <label for="name">Nama <i style="color:red;">*</i></label>
-                                        <input type="text" class="form-control" name="name" placeholder="Kategori" required value="<%= kategori.name %>" >
+                                        <input type="text" class="form-control" name="name" placeholder="role" required value="<%= role.name %>" >
                                     </div>
 
-                                    <div class="form-group">
-                                        <label for="urutan">Urutan <i style="color:red;">*</i></label>
-                                        <input type="text" class="form-control" name="urutan" placeholder="someone@example.com" required value="<%= kategori.urutan %>" >
-                                    </div>                                    
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="status" style="margin-bottom: 8px;">Status</label><br>
-                                        <input class="form-check-input" type="radio" name="status" value="Active" <%= kategori.status == 'Active' ? 'checked' : '' %>>
+                                        <input class="form-check-input" type="radio" name="status" value="Active" <%= role.status == 'Active' ? 'checked' : '' %>>
                                         <label class="form-check-label" for="status">
                                             Active
                                         </label>
-                                        <input class="form-check-input" type="radio" name="status" value="Inactive" <%= kategori.status == 'Inactive' ? 'checked' : '' %>>
+                                        <input class="form-check-input" type="radio" name="status" value="Inactive" <%= role.status == 'Inactive' ? 'checked' : '' %>>
                                         <label class="form-check-label" for="status">
                                             Inactive
                                         </label>
@@ -64,7 +60,7 @@
                                     <a href="#">
                                         <button class="btn btn-primary">Simpan</button>
                                     </a>
-                                    <a href="/kategori">
+                                    <a href="/role">
                                         <button type="button" class="btn btn-secondary">Back</button>
                                     </a>
                                 </div>
@@ -78,7 +74,7 @@
 </div>
 
 <script>
-    $("#update_kategori").submit(function(event){
+    $("#update_role").submit(function(event){
         event.preventDefault();
 
         var unindexed_array = $(this).serializeArray();
@@ -90,7 +86,7 @@
 
 
         var request = {
-            "url" : `http://localhost:3000/api/kategori/${data.id}`,
+            "url" : `http://localhost:3000/api/role/${data.id}`,
             "method" : "PUT",
             "data" : data
         }

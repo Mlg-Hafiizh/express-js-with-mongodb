@@ -3,6 +3,7 @@
         <tr>
             <th>Name</th>
             <th>Email</th>
+            <th>Role</th>
             <th>Gender</th>
             <th>Status</th>
             <th>Action</th>
@@ -13,15 +14,16 @@
             <tr>
                 <td><%= users[i].name %></td>
                 <td><%= users[i].email %></td>
+                <td><%= users[i].role %></td>
                 <td><%= users[i].gender %>
-                    <% if(users[i].gender == 'male') { %>
+                    <% if(users[i].gender == 'Male') { %>
                         <i class="fa fa-mars" style="color: #37badf;"></i></i>
                     <% } else { %> 
-                        <i class="fa fa-venus" style="color: #37badf;"></i></i>
+                        <i class="fa fa-venus" style="color: #ff78cb;"></i></i>
                     <% } %>
                 </td>
                 <td>
-                    <% if(users[i].status == 'active'){ %>
+                    <% if(users[i].status == 'Active'){ %>
                         <span class="badge bg-success"><%= users[i].status %></span>
                     <% } else{ %>
                         <span class="badge bg-danger"><%= users[i].status %></span>

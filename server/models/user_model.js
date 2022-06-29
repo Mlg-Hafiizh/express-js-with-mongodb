@@ -10,7 +10,11 @@ var schema = new mongoose.Schema({
         required: true,
         unique: true
     },
-    image : String,
+    role : {
+        type : String,
+        required: true
+    },
+    picture : String,
     gender : String,
     status : String,
 })

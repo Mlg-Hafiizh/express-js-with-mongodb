@@ -13,32 +13,31 @@
                 <div class="page-title">
                     <div class="row">
                         <div class="col-12 col-md-6 order-md-1 order-last">
-                            <h3>Halaman pengelolaan Buku</h3>
-                            <p class="text-subtitle text-muted">Berikut beberapa buku yang tersimpan pada database</p>
+                            <h3>Halaman pengelolaan Role</h3>
+                            <p class="text-subtitle text-muted">Berikut beberapa Role yang tersimpan pada database</p>
                         </div>
                         <div class="col-12 col-md-6 order-md-2 order-first">
                             <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="/">Master</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Halaman Buku</li>
+                                    <li class="breadcrumb-item active" aria-current="page">Halaman Role</li>
                                 </ol>
                             </nav>
                         </div>
                     </div>
                 </div>
-
                 <section class="section">
                     <div class="card">
                         <div class="card-content">
                             <div class="card-body">
                                 <ul class="list-unstyled mb-0">
                                     <li class="d-inline-block me-2 mb-1" style="float:left;">
-                                        <a href="/add-buku">
+                                        <a href="/add-role">
                                             <button class="btn btn-primary">Tambah</button>
                                         </a>
                                     </li>
                                     <li class="d-inline-block mb-1" style="float:right;">
-                                        <form action="/buku" method="GET" id="cari_buku">
+                                        <form action="/role" method="GET" id="cari_role">
                                             <div class="form-group row align-items-center">
                                                 <div class="col-8" style="padding:0;">
                                                     <input type="text" class="form-control" id="cari" name="cari" placeholder="Cari...">
@@ -65,13 +64,13 @@
     </div>
 
     <script>
-        if(window.location.pathname == "/buku"){
-            $ondelete = $("#delete-buku");
+        if(window.location.pathname == "/role"){
+            $ondelete = $("#delete-role");
             $ondelete.click(function(){
                 var id = $(this).attr("data-id")
 
                 var request = {
-                    "url" : `http://localhost:3000/api/buku/${id}`,
+                    "url" : `http://localhost:3000/api/role/${id}`,
                     "method" : "DELETE"
                 }
 
@@ -85,14 +84,14 @@
             })
         }
 
-        let table_buku = document.querySelector('#table-buku');
-        let dataTable = new simpleDatatables.DataTable(table_buku,{
+        let table_role = document.querySelector('#table-role');
+        let dataTable = new simpleDatatables.DataTable(table_role,{
             noRows: "No data to display",
             layout: {
                 top: "",
                 bottom: "{info}{pager}"
             },
         });
-        
+    
     </script>
 <%- include('../../template/_footer') %>
