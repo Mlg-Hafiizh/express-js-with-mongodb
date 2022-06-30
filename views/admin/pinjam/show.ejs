@@ -1,0 +1,30 @@
+<table class="table table-striped" id="table-cart">
+    <thead>
+        <tr>
+            <th>ISBN</th>
+            <th>Name</th>
+            <th>Stok</th>
+            <th>Harga</th>
+            <th style="width:10%;">Jumlah</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% for(var i = 0; i < cart.length; i++) { %>
+            <tr>
+                <td><%= cart[i].isbn %></td>
+                <td><%= cart[i].name %></td>
+                <td><%= cart[i].stok %></td>
+                <td id="harga" value="<%= cart[i].harga %>"><%= cart[i].harga %></td>
+                <td style="width:10%;">
+                    <input type="number" class="form-control" name="jumlah" placeholder="0" value="0" >
+                </td>
+                <td>
+                    <a href="/api/cart?cart=<%= cart[i]._id %>&qty=3">
+                        <button class="btn btn-primary">Tambah</button>
+                    </a>
+                </td>
+            </tr>
+        <% } %>
+    </tbody>
+</table>

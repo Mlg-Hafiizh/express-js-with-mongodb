@@ -1,9 +1,10 @@
-var tb_buku    = require('../models/buku_model');
+var tb_member = require('../models/member_model');
 var formidable = require('formidable');
 var fs         = require('fs');
 var path       = require("path");
 
-exports.create = (req,res) => { 
+// create and save new member
+exports.create = (req,res)=>{
     var formData = new formidable.IncomingForm();
     formData.parse(req, function(err,fields,files){
         if(!fields){
@@ -11,74 +12,77 @@ exports.create = (req,res) => {
             return;
         }
         var extension = files.picture.originalFilename.substr(files.picture.originalFilename.lastIndexOf(".")); //.png | .jpg 
-        var newPath = path.resolve(__dirname,"../../assets/images/buku/") + "\\" + files.picture.newFilename + extension; // localhost:3000 
+        var newPath = path.resolve(__dirname,"../../assets/images/faces/") + "\\" + files.picture.newFilename + extension; // localhost:3000 
         
-        const buku = new tb_buku({
-            isbn : fields.isbn,
+        const member = new tb_member({
             name : fields.name,
-            deskripsi: fields.deskripsi,
-            kategori: fields.kategori,
+            ids : fields.ids,
+            email : fields.email,
+            no_telpn : fields.no_telpn,
             picture : files.picture.newFilename + extension,
-            keterangan : "",
+            gender: fields.gender,
             status : fields.status,
         })
     
         fs.copyFile(files.picture._writeStream.path, newPath, function(errorRename) {
 
-            buku
-            .save(buku)
+            member
+            .save(member)
             .then(data => {
                 // res.send('data')
-                res.redirect('/add-buku');
+                res.redirect('/add-member');
             })
             .catch(err =>{
                 res.status(500).send({
-                    message : err.message || "Some error occurred while creating a create operation"
+                    message : err.message || "Some error occurred while creating a create operation of member"
                 });
             });
 
-            // res.send("File saved = " + newPath); 
         });
     });
-
 }
 
 exports.find = (req, res)=>{
+
     if(req.query.id){
         const id = req.query.id;
-        tb_buku.findById(id)
+
+        tb_member.findById(id)
             .then(data =>{
                 if(!data){
-                    res.status(404).send({ message : "Not found buku with id "+ id})
+                    res.status(404).send({ message : "Not found member with id "+ id})
                 }else{
-                    res.send(data); 
+                    res.send(data)
                 }
             })
             .catch(err =>{
-                res.status(500).send({ message: "Erro retrieving buku with id " + id})
+                res.status(500).send({ message: "Erro retrieving member with id " + id})
             })
     } else if(req.query.cari){
         const cari = req.query.cari;
-        console.log(cari);
-        tb_buku.find({$or:[{name:new RegExp(cari, 'i')},{kategori:new RegExp(cari, 'i')},{isbn:new RegExp(cari, 'i')}]})
-            .then(data => {  
+
+        tb_member.find({$or:[
+                {name:new RegExp(cari, 'i')},
+                {email:new RegExp(cari, 'i')},
+                {no_telpn:new RegExp(cari, 'i')},
+                {ids:new RegExp(cari, 'i')}
+            ]}).then(data => {  
                 if(!data){
-                    res.status(404).send({ message : "Not found buku with cari "+ cari})
+                    res.send(data);
                 }else{
                     res.send(data);
                 } 
-
             })
             .catch(err => { 
                 res.status(500).send({ message: "Error retrieving data with cari " + cari + ". " + err});
             })
-    } else{
-        tb_buku.find().sort({ name : "asc"})
-            .then(buku => {
-                res.send(buku)
+    } else {
+        tb_member.find().sort({ name : "asc"})
+            .then(member => {
+                res.send(member)
             })
             .catch(err => {
-                res.status(500).send({ message : err.message || "Error Occurred while retriving buku information" })
+                res.status(500).send({ message : err.message || "Error Occurred while retriving member information" })
             })
     }
 
@@ -93,39 +97,40 @@ exports.update = (req, res)=>{
             res.status(400).send({ message : "Data to update can not be empty"});
             return;
         }
-        var newPath = path.resolve(__dirname,"../../assets/images/buku/") + "\\" + fields.picture_old;
+        var newPath = path.resolve(__dirname,"../../assets/images/faces/") + "\\" + fields.picture_old;
         fs.copyFile(files.picture._writeStream.path, newPath, function(errorRename) {
-            tb_buku.findByIdAndUpdate(id, fields, { useFindAndModify: false})
+            tb_member.findByIdAndUpdate(id, fields, { useFindAndModify: false})
             .then(data => {
                 if(!data){
-                    res.status(404).send({ message : `Cannot Update buku with ${id}. Maybe buku not found!`})
+                    res.status(404).send({ message : `Cannot Update member with ${id}. Maybe member not found!`})
                 }else{
                     res.send(data)
                 }
             })
             .catch(err =>{
-                res.status(500).send({ message : "Error Update buku information"})
+                res.status(500).send({ message : "Error Update member information"})
             })            
         });
     });
+    
 }
 
 exports.delete = (req, res)=>{
     const id = req.params.id;
 
-    tb_buku.findByIdAndDelete(id)
+    tb_member.findByIdAndDelete(id)
         .then(data => {
             if(!data){
                 res.status(404).send({ message : `Cannot Delete with id ${id}. Maybe id is wrong`})
             }else{
                 res.send({
-                    message : "buku was deleted successfully!"
+                    message : "member was deleted successfully!"
                 })
             }
         })
         .catch(err =>{
             res.status(500).send({
-                message: "Could not delete buku with id=" + id
+                message: "Could not delete member with id=" + id
             });
         });
 }

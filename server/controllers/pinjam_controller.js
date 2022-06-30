@@ -1,24 +1,37 @@
-var tb_cart = require('../models/cart_model');
+var tb_pinjam = require('../models/pinjam_model');
 var tb_buku    = require('../models/buku_model');
 
 exports.create = (req,res) => { 
-    var val_id_buku = req.body.id_buku;
-    var val_id_kasir = req.body.id_kasir;
-    tb_buku.findById(val_id_buku).then(data =>{
-        const cart = new tb_cart({
-            id_kasir : val_id_kasir,
-            nama_kasir : val_kasir,
-            id_buku : val_id_buku,
+    tb_buku.findById(req.body.id_buku).then(data =>{
+        const pinjam = new tb_pinjam({
+            id_pegawai : req.body.id_kasir,
+            nama_pegawai : req.body.nama_kasir,
+            id_buku : req.body.id_buku,
             nama_buku : req.body.nama_buku,
-            jumlah : val_qty,
-            harga_total : req.body.nama_buku,
-            status : "Cart",
+            tgl_pinjam : req.body.tgl_pinjam,
+            tgl_kembali : req.body.tgl_kembali,
+            keterangan : "Dipinjam",
+            status : "Active",
         });
-        cart
-            .save(cart)
+
+        pinjam
+            .save(pinjam)
             .then(data => {
                 // res.status(200).send(data);
-                res.redirect('/cart');
+                tb_buku.findOneAndUpdate({ _id : req.body.id_buku },{ keterangan : 'Sedang dipinjam' })
+                    .then(data => {
+                        if(!data){
+                            res.status(404).send({ message : `Cannot Delete with id ${id}. Maybe id is wrong`})
+                        }else{
+                            res.redirect('/pinjam');
+                        }
+                    })
+                    .catch(err =>{
+                        res.status(500).send({
+                            message: "Could not delete buku with id=" + id
+                        });
+                    });
+                
             })
             .catch(err =>{
                 res.status(500).send({
@@ -27,7 +40,7 @@ exports.create = (req,res) => {
             });
     })
     .catch(err =>{
-        res.status(500).send({ message: "Error retrieving cart with id " + val_id_buku + ". Error : " + err});
+        res.status(500).send({ message: "Error create cart with buku " + req.body.nama_buku + ". Error : " + err});
     })
     
 };
@@ -36,7 +49,7 @@ exports.find = (req, res)=>{
     if(req.query.id){
         const id = req.query.id;
 
-        tb_cart.findById(id)
+        tb_pinjam.findById(id)
             .then(data =>{
                 if(!data){
                     res.status(404).send({ message : "Not found cart with id "+ id});
@@ -49,8 +62,7 @@ exports.find = (req, res)=>{
             })
     } else if(req.query.cari){
         const cari = req.query.cari;
-
-        tb_cart.find({name : new RegExp(cari, 'i')})
+        tb_buku.findOne({name : new RegExp(cari, 'i')})
             .then(data => {  
                 if(!data){
                     res.status(404).send({ message : "Not found cart with cari "+ cari});
@@ -61,13 +73,12 @@ exports.find = (req, res)=>{
             .catch(err => { 
                 res.status(500).send({ message: "Error retrieving cart with cari " + cari + ". " + err});
             })
-    }else{
+    } else {
         var status = "";
         if(req.query.status) {
             status = req.query.status;
         } 
-        //SELECT * FROM tb_buku WHERE status LIKE '% $status %';
-        tb_cart.find({status : { $regex: '.*' + status + '.*' }}).sort({ urutan : "asc"})
+        tb_pinjam.find({status : { $regex: '.*' + status + '.*' }}).sort({ urutan : "asc"})
             .then(cart => {
                 res.send(cart);
             })

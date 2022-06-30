@@ -13,18 +13,7 @@ var schema = new mongoose.Schema({
     deskripsi : String,
     kategori : String,
     picture : String,
-    stok : {
-        type: Number, 
-        min: 0, 
-        default: 0, 
-        required: true
-    },
-    harga : {
-        type: Number, 
-        min: 0, 
-        default: 0, 
-        required: true
-    },
+    keterangan : String,
     status : String,
 })
 

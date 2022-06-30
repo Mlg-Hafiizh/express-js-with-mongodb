@@ -3,8 +3,8 @@
         <tr>
             <th>ISBN</th>
             <th>Name</th>
-            <th>Stok</th>
-            <th>Harga</th>
+            <th>Kategori</th>
+            <th>Keterangan</th>
             <th>Status</th>
             <th>Action</th>
         </tr>
@@ -14,8 +14,8 @@
             <tr>
                 <td><%= buku[i].isbn %></td>
                 <td><%= buku[i].name %></td>
-                <td><%= buku[i].stok %></td>
-                <td id="harga" value="<%= buku[i].harga %>"><%= buku[i].harga %></td>
+                <td><%= buku[i].kategori %></td>
+                <td><%= buku[i].keterangan %></td>
                 <td>
                     <% if(buku[i].status == 'Active'){ %>
                         <span class="badge bg-success"><%= buku[i].status %></span>

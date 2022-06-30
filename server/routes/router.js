@@ -3,10 +3,11 @@ const route = express.Router()
 
 const services = require('../services/render');
 const user_controller = require('../controllers/user_controller');
+const member_controller = require('../controllers/member_controller');
 const kategori_controller = require('../controllers/kategori_controller');
 const buku_controller = require('../controllers/buku_controller');
 const role_controller = require('../controllers/role_controller');
-const cart_controller = require('../controllers/cart_controller');
+const pinjam_controller = require('../controllers/pinjam_controller');
 
 // Admin Index
 route.get('/', services.adminRoutes);
@@ -23,6 +24,20 @@ route.post('/api/users', user_controller.create);
 route.get('/api/users', user_controller.find);
 route.put('/api/users/:id', user_controller.update);
 route.delete('/api/users/:id', user_controller.delete);
+
+// --------------------------------------------------------------- //
+
+// Member Section
+// Page
+route.get('/member', services.memberRoutes);
+route.get('/add-member', services.add_member);
+route.get('/update-member', services.update_member);
+
+// API
+route.post('/api/members', member_controller.create);
+route.get('/api/members', member_controller.find);
+route.put('/api/members/:id', member_controller.update);
+route.delete('/api/members/:id', member_controller.delete);
 
 // --------------------------------------------------------------- //
 
@@ -69,17 +84,17 @@ route.delete('/api/role/:id', role_controller.delete);
 // --------------------------------------------------------------- //
 
 
-// Cart Section
+// Peminjaman Section
 // Page
-route.get('/cart', services.cartRoutes);
-route.get('/add-cart', services.add_cart);
-route.get('/update-cart', services.update_cart);
+route.get('/pinjam', services.pinjamRoutes);
+route.get('/add-pinjam', services.add_pinjam);
+route.get('/update-pinjam', services.update_pinjam);
 
 // API
-route.post('/api/cart', cart_controller.create);
-route.get('/api/cart', cart_controller.find);
-// route.put('/api/cart/:id', cart_controller.update);
-// route.delete('/api/cart/:id', cart_controller.delete);
+route.post('/api/pinjam', pinjam_controller.create);
+route.get('/api/pinjam', pinjam_controller.find);
+// route.put('/api/pinjam/:id', pinjam_controller.update);
+// route.delete('/api/pinjam/:id', pinjam_controller.delete);
 
 // --------------------------------------------------------------- //
 

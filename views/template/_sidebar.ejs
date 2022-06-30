@@ -1,10 +1,12 @@
 <% 
-    master = '',user = '',buku = '',kategori = '',role = '',kasir = '',cart = '',laporan = '',rekap_penjualan = ''
+    master = '',user = '',member = '',buku = '',kategori = '',role = '',kasir = '',pinjam = '',kembali = '',laporan = '',rekap_penjualan = ''
 
     if(menu == 'master') {
         master = 'active'
     } else if (menu == 'user'){
         user = 'active'
+    } else if (menu == 'member'){
+        member = 'active'
     } else if (menu == 'buku'){
         buku = 'active'
     } else if (menu == 'kategori'){
@@ -15,8 +17,10 @@
         status_user = 'active'
     } else if (menu == 'kasir'){
         kasir = 'active'
-    } else if (menu == 'cart'){
-        cart = 'active'
+    } else if (menu == 'pinjam'){
+        pinjam = 'active'
+    } else if (menu == 'kembali'){
+        kembali = 'active'
     } else if (menu == 'laporan'){
         laporan = 'active'
     } else if (menu == 'rekap_penjualan'){
@@ -40,7 +44,6 @@
         <div class="sidebar-menu">
             <ul class="menu">
                 <li class="sidebar-title">Master</li>
-               
                 <li class="sidebar-item <%- master %>">
                 
                     <a href="/" class='sidebar-link'>
@@ -48,21 +51,24 @@
                         <span>Pengumuman</span>
                     </a>
                 </li>
-
                 <li class="sidebar-item  <%- user %>">
                     <a href="/users" class='sidebar-link'>
                         <i class="bi bi-person-check-fill"></i>
                         <span>User</span>
                     </a>
                 </li>
-
+                <li class="sidebar-item  <%- member %>">
+                    <a href="/member" class='sidebar-link'>
+                        <i class="bi bi-person-check-fill"></i>
+                        <span>Member</span>
+                    </a>
+                </li>
                 <li class="sidebar-item  <%- role %>">
                     <a href="/role" class='sidebar-link'>
                         <i class="bi bi-people"></i>
                         <span>Role</span>
                     </a>
                 </li>
-
                 <li class="sidebar-item  <%- buku %>">
                     <a href="/buku" class='sidebar-link'>
                         <i class="bi bi-book-fill"></i>
@@ -76,15 +82,21 @@
                         <span>Kategori</span>
                     </a>
                 </li>
-               
             </ul>
             <ul class="menu">
-                <li class="sidebar-title">Penjualan</li>
+                <li class="sidebar-title">Pencatatan</li>
                
-                <li class="sidebar-item  <%- cart %>">
-                    <a href="/cart" class='sidebar-link'>
-                        <i class="bi bi-cart-fill"></i>
-                        <span>Keranjang</span>
+                <li class="sidebar-item  <%- pinjam %>">
+                    <a href="/pinjam" class='sidebar-link'>
+                        <i class="bi bi-inboxes-fill"></i>
+                        <span>Peminjaman</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-item  <%- kembali %>">
+                    <a href="/kembali" class='sidebar-link'>
+                        <i class="bi bi-inboxes-fill"></i>
+                        <span>Pengembalian</span>
                     </a>
                 </li>
 

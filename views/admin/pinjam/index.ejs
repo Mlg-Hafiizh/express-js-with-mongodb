@@ -13,64 +13,67 @@
                 <div class="page-title">
                     <div class="row">
                         <div class="col-12 col-md-6 order-md-1 order-last">
-                            <h3>Halaman Penjualan</h3>
-                            <p class="text-subtitle text-muted">Berikut beberapa buku yang bisa dibeli</p>
+                            <h3>Halaman Peminjaman</h3>
+                            <p class="text-subtitle text-muted">Silahkan cari buku yang ingin dipinjam</p>
                         </div>
                         <div class="col-12 col-md-6 order-md-2 order-first">
                             <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                                 <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="/">Penjualan</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Keranjang</li>
+                                    <li class="breadcrumb-item"><a href="/">Perpustakaan</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Peminjaman</li>
                                 </ol>
                             </nav>
                         </div>
                     </div>
                 </div>
-
                 <section class="section">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title">Form Keranjang</h4>
+                            <h4 class="card-title">Form Peminjaman</h4>
                         </div>
                         <div class="card-content">
                             <div class="card-body" style="padding-top:0px;" >
                                 <div class="col-md-12" style="margin-bottom:20px;">
-                                    <form class="form form-horizontal" action="/cart" method="GET" id="cart_cari_buku">
+                                    <form class="form form-horizontal" action="/pinjam" method="GET" id="cari_buku">
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="input-group mb-4">
-                                                    <input type="text" class="form-control" placeholder="Cari buku..." name="cart">
+                                                    <input type="text" class="form-control" placeholder="Cari buku..." name="cari">
                                                     <button class="btn btn-primary" type="submit" id="button-addon1">Button</button>
                                                 </div>
                                             </div>
                                             
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                     <div class="row">
-                                                        <div class="col-sm-8">
-                                                            <div class="alert alert-primary" style="padding: 7px 10px 7px 10px;">
-                                                                <span class="badge bg-transparent"><%= proses['jumlah'] %></span> | Total Bayar = Rp <%= proses['harga_total'] %>
-                                                            </div>
+                                                    <div class="row">
+                                                        <div class="col-sm-3">
                                                         </div>
-                                                        <div class="col-sm-4">
-                                                            
-                                                                <a href="#" type="button" class="btn btn-success" style="width:100%;">
-                                                                    Proses
-                                                                </a>
+                                                        <div class="col-sm-6">
+                                                            <% if(buku.keterangan == "Dipinjam"){ %>
+                                                                <div class="alert alert-danger" style="padding: 7px 10px 7px 10px;text-align: center;">
+                                                                    <span class="badge bg-transparent">Buku ini tidak bisa dipinjam</span>
+                                                                </div>  
+                                                                <% } else { %>
+                                                                <div class="alert alert-primary" style="padding: 7px 10px 7px 10px;text-align: center;">
+                                                                    <span class="badge bg-transparent">Buku ini bisa dipinjam</span>
+                                                                </div>
+                                                                <% }  %>
                                                         </div>
-                                                    </div>  
+                                                        <div class="col-sm-3">
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </form>
                                 </div>
                                 <div class="col-md-12">
-                                    <form class="form form-horizontal" action="/api/cart" method="POST">
+                                    <form class="form form-horizontal" action="/api/pinjam" method="POST">
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="row">
                                                     <div class="col-md-4">
-                                                        <label>Kasir</label>
+                                                        <label>Penjaga</label>
                                                     </div>
                                                     <div class="col-md-8 form-group">
                                                         <input type="text" class="form-control" name="nama_kasir" value="Hanas April" readonly>
@@ -80,47 +83,45 @@
                                                         <label>ISBN</label>
                                                     </div>
                                                     <div class="col-md-8 form-group">
-                                                        <input type="text" class="form-control" name="isbn" value="<%=cart.isbn%>" readonly>
-                                                        <input type="hidden" class="form-control" name="id_buku" value="<%=cart._id%>" readonly>
+                                                        <input type="text" class="form-control" name="isbn" value="<%=buku.isbn%>" readonly>
+                                                        <input type="hidden" class="form-control" name="id_buku" value="<%=buku._id%>" readonly>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <label>Nama Buku</label>
                                                     </div>
                                                     <div class="col-md-8 form-group">
-                                                        <input type="text" class="form-control" name="nama_buku" value="<%=cart.name%>" readonly>
+                                                        <input type="text" class="form-control" name="nama_buku" value="<%=buku.name%>" readonly>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <label>Kategori</label>
                                                     </div>
                                                     <div class="col-md-8 form-group">
-                                                        <input type="text" class="form-control" name="kategori" value="<%=cart.kategori%>" readonly>
+                                                        <input type="text" class="form-control" name="kategori" value="<%=buku.kategori%>" readonly>
                                                     </div>
+                                                    
                                                     <div class="col-md-4">
-                                                        <label>Harga</label>
+                                                        <label>Tanggal Pinjam</label>
                                                     </div>
                                                     <div class="col-md-8 form-group">
-                                                        <input type="number" class="form-control" id="harga" name="harga" value="<%=cart.harga%>" readonly>
+                                                        <input type="date" class="form-control" id="tgl_pinjam" name="tgl_pinjam" required <%- buku.keterangan == 'Dipinjam' ? 'readonly' : '' %>>
                                                     </div>
                                                     <div class="col-md-4">
-                                                        <label>Jumlah Beli</label>
+                                                        <label>Tanggal Kembali</label>
                                                     </div>
-                                                    <div class="col-md-4 form-group">
-                                                        <input type="number" class="form-control" id="jumlah" name="jumlah" placeholder="2" required>
-                                                    </div>
-                                                    <div class="col-md-4 form-group">
-                                                        <input type="number" class="form-control" id="total" name="total" placeholder="20000" readonly>
+                                                    <div class="col-md-8 form-group">
+                                                        <input type="date" class="form-control" id="tgl_kembali" name="tgl_kembali" required <%- buku.keterangan == 'Dipinjam' ? 'readonly' : '' %>>
                                                     </div>
                                                     <div class="col-md-4">
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
-                                                        <button type="reset"class="btn btn-light-secondary me-1 mb-1">Reset</button>
+                                                        <button type="submit" class="btn btn-primary me-1 mb-1" <%- buku.keterangan == 'Dipinjam' ? 'disabled' : '' %>>Submit</button>
+                                                        <button type="reset"class="btn btn-light-secondary me-1 mb-1" <%- buku.keterangan == 'Dipinjam' ? 'disabled' : '' %>>Reset</button>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <img id="blah" src="http://<%= baseUrl %>/images/buku/<%=cart.picture%>" onerror="this.src='/images/your_image_here.jpg'"
+                                                    <img id="blah" src="http://<%= baseUrl %>/images/buku/<%=buku.picture%>" onerror="this.src='/images/your_image_here.jpg'"
                                                         style="height: 250px;
                                                         border-radius: 5px;
                                                         display: block;
@@ -143,43 +144,9 @@
     </div>
 
     <script>
-        if(window.location.pathname == "/cart"){
-            $ondelete = $("#delete-cart");
-            $ondelete.click(function(){
-                var id = $(this).attr("data-id")
-
-                var request = {
-                    "url" : `http://localhost:3000/api/cart/${id}`,
-                    "method" : "DELETE"
-                }
-
-                if(confirm("Do you really want to delete this record?")){
-                    $.ajax(request).done(function(response){
-                        alert("Data Deleted Successfully!");
-                        location.reload();
-                    })
-                }
-
-            })
-        }
-        $( "#cart_cari_buku" ).submit(function( event ) {
-            $("#blah").attr("src","http://<%= baseUrl %>/images/buku/<%=cart.picture%>");
+        $( "#pinjam_cari_buku" ).submit(function( event ) {
+            $("#blah").attr("src","http://<%= baseUrl %>/images/buku/<%=pinjam.picture%>");
         });
 
-        $(document).ready(function()
-        {
-            function updatePrice()
-            {
-                var price = parseFloat($("#harga").val());
-                var qty = parseFloat($("#jumlah").val());
-                var total = price * qty;
-                $("#total").val(total);
-            }
-            $(document).on("change, keyup", "#jumlah", updatePrice);
-        });
-
-
-
-        
     </script>
 <%- include('../../template/_footer') %>
